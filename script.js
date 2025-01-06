@@ -26,7 +26,7 @@ let debitContainer = document.getElementById("debit")
 let creditContainer = document.getElementById("credit")
 let filtered = document.getElementById("filtered")
 
-function getsttypye(){
+function getsttypye() {
     let radios = document.getElementsByName("st-type")
     let sttype = null;
 
@@ -98,28 +98,28 @@ function validateform() {
     return true
 }
 
-function getDebit(transactions){
+function getDebit(transactions) {
     let debit = 0;
     transactions.forEach((transaction, index) => {
 
-        if (transaction["t-type"]=="debit") {
+        if (transaction["t-type"] == "debit") {
 
-            debit += parseFloat(transaction.Amount) || 0;  
-            
+            debit += parseFloat(transaction.Amount) || 0;
+
         }
     });
 
     return debit;
 }
 
-function getCredit(transactions){
+function getCredit(transactions) {
     let credit = 0;
     transactions.forEach((transaction, index) => {
 
-        if (transaction["t-type"]=="credit") {
+        if (transaction["t-type"] == "credit") {
 
-            credit += parseFloat(transaction.Amount) || 0;  
-            
+            credit += parseFloat(transaction.Amount) || 0;
+
         }
     });
 
@@ -175,9 +175,9 @@ function filterTransactions() {
     let acc = accountSearch.value.trim().toLowerCase();
     let cat = categorySearch.value.trim().toLowerCase();
     let tType = getsttypye();
-    
-    if (((!isNaN(from))&& (!isNaN(to)))||(acc!="")||(cat="")||(tType!=null)) {
-        
+
+    if (((!isNaN(from)) && (!isNaN(to))) || (acc != "") || (cat = "") || (tType != null)) {
+
 
         let filteredTransactions = transactions.filter(transaction => {
             let transactionDate = new Date(transaction.date);
@@ -185,18 +185,18 @@ function filterTransactions() {
             let matchCategory = cat ? transaction.category.toLowerCase().includes(cat) : true;
             let matchType = tType ? transaction["t-type"] === tType : true;
             let matchDate = (!isNaN(from) ? transactionDate >= from : true) && (!isNaN(to) ? transactionDate <= to : true);
-    
+
             return matchAccount && matchCategory && matchType && matchDate;
         });
-    
+
         // searchDiv.innerHTML = "<h3>Filtered Transactions</h3>";
-    
+
         // let debitContainer = document.createElement("div");
         debitContainer.innerHTML = `<h4>Debits: ${getDebit(filteredTransactions)}</h4>`;
-    
+
         // let creditContainer = document.createElement("div");
         creditContainer.innerHTML = `<h4>Credits: ${getCredit(filteredTransactions)}</h4>`;
-    
+
         filteredTransactions.forEach(transaction => {
             let transactionEntry = document.createElement("div");
             transactionEntry.classList.add("transaction")
@@ -205,14 +205,14 @@ function filterTransactions() {
                 <p>Category: ${transaction.category}</p>
                 <p>Description: ${transaction.description}</p>
                 <p>Amount: ${transaction.Amount}</p>`;
-            
+
             if (transaction["t-type"] === "debit") {
                 debitContainer.appendChild(transactionEntry);
             } else {
                 creditContainer.appendChild(transactionEntry);
             }
         });
-    
+
         // filtered.appendChild(debitContainer);
         // filtered.appendChild(creditContainer);
 
@@ -222,9 +222,8 @@ function filterTransactions() {
         showAlert2("Select atleast one filter");
         console.log("hello")
     }
-   
-}
 
+}
 
 addTransaction.addEventListener("click", function (event) {
     event.preventDefault();
@@ -271,7 +270,7 @@ addAccount.addEventListener("click", function () {
     let add = document.createElement("div")
     add.classList.add("add-item");
     add.innerHTML =
-                 ` <h6>Add Account</h6>
+        ` <h6>Add Account</h6>
                     <input type="text" class="name" placeholder="Account name" id="add-acc-name">
                     <br>
                     <input type="submit" value="Add Account" class="add-name" id="add-acc">`
@@ -279,13 +278,13 @@ addAccount.addEventListener("click", function () {
 
 });
 
-addCategory.addEventListener("click", function (){
+addCategory.addEventListener("click", function () {
 
     addCategory.classList.add("hidden")
     let add = document.createElement("div")
     add.classList.add("add-item");
     add.innerHTML =
-                 ` <h6>Add Category</h6>
+        ` <h6>Add Category</h6>
                     <input type="text" class="name" placeholder="Category name" id="add-cat-name">
                     <br>
                     <input type="submit" value="Add Category" class="add-name" id="add-cat">`
