@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Track</title> 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+
+    <div class="container">
+        <div class="leftbar">
+            <div class="menu" id="menu">
+                <button class="add" id="add-account">Add Account</button>
+                <button class="add" id="add-category">Add Category</button>
+                
+            </div>
+        </div>
+        <div class="main">
+            
+                <h3>Add Transaction details :</h3>
+                <div id="message-div" class="mdiv"></div>
+                <div class="form">
+                <form action="" class="f-div">
+                <p>
+                <label for="date">Date:<span class="required">*</span></label>
+                <input type="date" name="date" id="date" required>
+            </p>
+            <p>
+               <span> <label for="tt">Transaction Type:<span class="required">*</span></label></span>
+               <span>
+                <input type="radio" name="t-type" id="t-type-c" required value="credit">
+                <label for="t-type-c">Credit</label></span>
+                <span>
+                <input type="radio" name="t-type" id="t-type-d" required value="debit">
+                <label for="t-type-d">Debit</label></span>
+            </p>
+            <p>
+                <label for="account">
+                    Account:<span class="required">*</span>
+                </label>
+
+                <select name="Account" id="account" required>
+                    <option value="a"> <--select account--> </option>
+                </select>
+
+            </p>
+            <p>
+                <label for="category">
+                    Category:<span class="required">*</span>
+                </label>
+
+                <select name="category" id="category" required>
+                    <option value="h"> <--select category--> </option>
+                </select>
+
+            </p>
+
+            <p>
+                <label for="description">Description:<span class="required">*</span></label>
+                <input type="text" name="desc" id="description" placeholder="Description" required>
+            </p>
+            <p>
+                <label for="amount">
+                    Amount(₹):<span class="required">*</span>
+                </label>
+                <input type="number" name="amount" id="amount" placeholder="Amount(₹)" min="0" required>
+            </p>
+            <p class="buttons">
+                <input type="submit" value="Add Transaction" id="add-t" class="add-t">
+                <input type="reset" value="Reset" id="reset" class="add-t" >
+            </p>
+                </form>
+
+            </div>
+
+
+            <h3>Search Transactions:</h3>
+            <div id="message-div2" class="mdiv"></div>
+
+            <div class="search" id="search-div">
+                <div class="filters">
+                    <p>
+                        <label for="from-date-search">From Date:</label>
+                        <input type="date" name="from-date-search" id="from-date-search" >
+                    </p>
+                    <p>
+                        <label for="to-date-search">To Date:</label>
+                        <input type="date" name="to-date-search" id="to-date-search" >
+                    </p>
+                    <p>
+                       <span> <label for="tt">Transaction Type:</label></span>
+                       <span>
+                        <input type="radio" name="st-type" id="t-type-c-seach">
+                        <label for="t-type-c-seach">Credit</label></span>
+                        <span>
+                        <input type="radio" name="st-type" id="t-type-d-search" >
+                        <label for="t-type-d-search">Debit</label></span>
+                    </p>
+                    <p>
+                        <label for="account-search">
+                            Account:
+                        </label>
+        
+                        <select name="Account" id="account-search" >
+                            <option value=""> <--select account--> </option>
+                        </select>
+        
+                    </p>
+                    <p>
+                        <label for="category-search">
+                            Category:
+                        </label>
+        
+                        <select name="category" id="category-search" >
+                            <option value=""> <--select category--> </option>
+                        </select>
+
+
+        
+                    </p>
+                    <p>
+                        <input type="submit" class="add-t" value="Search" id="search">
+                    </p>
+        
+                </div>
+                <h4>Results:</h4>
+                <div id="filtered" class="filtered">
+                    <div class="debit" id="debit"></div>
+                    <div class="credit" id="credit"></div>
+                   
+                    <!-- <div class="debit" >
+                        <p>Debit:</p>
+                        <div class="transaction">
+
+                            <p>  Date:</p>
+                            
+                              <p>Type:</p>
+                              
+                              <p>Account:</p>
+                             
+                              <p>Category:</p>
+                           
+                              
+                           
+                              <p>Amount:</p>
+                              
+                              <button>Delete</button>
+                          
+                          </div>
+                    </div>
+                    <div class="credit">
+                        <p>Credit:</p>
+                        <div class="transaction">
+                            <p>  Date:</p>
+                            
+                              <p>Type:</p>
+                              
+                              <p>Account:</p>
+                             
+                              <p>Category:</p>
+                           
+                              
+                           
+                              <p>Amount:</p>
+                              
+                              <button>Delete</button>
+                          
+                          </div>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+        <div class="rightbar">
+            <h3>Reports:</h3>
+            <div class="stats" id="stats">
+                <li>Total Debit:</li>
+                <li>Total Credit:</li>
+            </div>
+
+            <div class="transactions" id="t-div">
+                
+                <div class="transaction">
+                  <p>  Date:</p>
+                  
+                    <p>Type:</p>
+                    
+                    <p>Account:</p>
+                   
+                    <p>Category:</p>
+                 
+                    
+                 
+                    <p>Amount:</p>
+                    
+                    <button>Delete</button>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
