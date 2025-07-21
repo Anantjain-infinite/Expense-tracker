@@ -24,7 +24,9 @@ let categorySearch = document.getElementById("category-search");
 let search = document.getElementById("search");
 let debitContainer = document.getElementById("debit")
 let creditContainer = document.getElementById("credit")
-let filtered = document.getElementById("filtered")
+let filtered = document.getElementById("filtered");
+let accounts = [];
+let  categories = [];
 
 function getsttypye() {
     let radios = document.getElementsByName("st-type")
@@ -225,6 +227,101 @@ function filterTransactions() {
 
 }
 
+function appendaccount(){
+
+            account.innerHTML= ``;
+            accountSearch.innerHTML=``;
+
+            let option = document.createElement("option");
+            option.value = "";
+            option.textContent = "<--SELECT ACCOUNT-->";
+            let optionS = document.createElement("option");
+            optionS.value = "";
+            optionS.textContent = "<--SELECT ACCOUNT-->";
+            accountSearch.append(option);
+            account.append(optionS);
+
+    accounts.forEach(Account => {
+        let option = document.createElement("option");
+            option.value = Account;
+            option.textContent = Account;
+            let optionS = document.createElement("option");
+            optionS.value = Account;
+            optionS.textContent = Account;
+            accountSearch.append(option);
+            account.append(optionS);
+    });
+}
+
+function appendcategory(){
+
+    category.innerHTML= ``;
+    categorySearch.innerHTML=``;
+
+    let option = document.createElement("option");
+    option.value = "";
+    option.textContent = "<--SELECT CATEGORY-->";
+    let optionS = document.createElement("option");
+    optionS.value = "";
+    optionS.textContent = "<--SELECT CATEGORY-->";
+    categorySearch.append(option);
+    category.append(optionS);
+
+categories.forEach(Category => {
+let option = document.createElement("option");
+    option.value = Category;
+    option.textContent = Category;
+    let optionS = document.createElement("option");
+    optionS.value = Category;
+    optionS.textContent = Category;
+    categorySearch.append(option);
+    category.append(optionS);
+});
+
+}
+
+function storeDataInLocalStorage() {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+    localStorage.setItem("accounts", JSON.stringify(accounts));
+    localStorage.setItem("categories", JSON.stringify(categories));
+    // showAlert("Data saved successfully to local storage");
+}
+
+// Call this function after updating transactions, accounts, or categories
+// Example usage:
+// storeDataInLocalStorage();
+
+
+function loadDataFromLocalStorage() {
+    const savedTransactions = localStorage.getItem("transactions");
+    const savedAccounts = localStorage.getItem("accounts");
+    const savedCategories = localStorage.getItem("categories");
+
+    if (savedTransactions) {
+        transactions = JSON.parse(savedTransactions);
+    }
+    if (savedAccounts) {
+        accounts = JSON.parse(savedAccounts);
+        appendaccount(); // Update account options in the dropdown
+    }
+    if (savedCategories) {
+        categories = JSON.parse(savedCategories);
+        appendcategory(); // Update category options in the dropdown
+    }
+
+    display(); // Refresh the UI with loaded data
+}
+
+// Call this function when the page loads
+// Example usage:
+// Event listener to load data from local storage on page load
+
+
+window.addEventListener("DOMContentLoaded", function () {
+    loadDataFromLocalStorage();
+});
+
+
 addTransaction.addEventListener("click", function (event) {
     event.preventDefault();
 
@@ -296,14 +393,10 @@ menu.addEventListener("click", function (e) {
     if (e.target && e.target.id === "add-acc") {
         let newAccount = document.getElementById("add-acc-name").value.trim();
         if (newAccount) {
-            let option = document.createElement("option");
-            option.value = newAccount;
-            option.textContent = newAccount;
-            let optionS = document.createElement("option");
-            optionS.value = newAccount;
-            optionS.textContent = newAccount;
-            accountSearch.append(option);
-            account.append(optionS);
+
+            
+            accounts.push(newAccount);
+            appendaccount();
 
             showAlert("Account added successfully");
             e.target.parentElement.remove();
@@ -318,14 +411,10 @@ menu.addEventListener("click", function (e) {
     if (e.target && e.target.id === "add-cat") {
         let newCategory = document.getElementById("add-cat-name").value.trim();
         if (newCategory) {
-            let option = document.createElement("option");
-            option.value = newCategory;
-            option.textContent = newCategory;
-            let optionS = document.createElement("option");
-            optionS.value = newCategory;
-            optionS.textContent = newCategory;
-            category.appendChild(option);
-            categorySearch.appendChild(optionS)
+            
+            categories.push(newCategory);
+            appendcategory();
+
             showAlert("Category added successfully");
             e.target.parentElement.remove();
             addCategory.classList.remove("hidden")
@@ -336,3 +425,35 @@ menu.addEventListener("click", function (e) {
 });
 
 search.addEventListener("click", filterTransactions);
+
+
+// Automatically save data to local storage when changes occur
+function setupAutoSave() {
+    // Save transactions on add, edit, or delete
+    addTransaction.addEventListener("click", function () {
+        storeDataInLocalStorage();
+    });
+
+    trDiv.addEventListener("click", function (e) {
+        if (e.target.classList.contains("delete") || e.target.classList.contains("edit")) {
+            storeDataInLocalStorage();
+        }
+    });
+
+    // Save accounts when a new account is added
+    menu.addEventListener("click", function (e) {
+        if (e.target && e.target.id === "add-acc") {
+            storeDataInLocalStorage();
+        }
+    });
+
+    // Save categories when a new category is added
+    menu.addEventListener("click", function (e) {
+        if (e.target && e.target.id === "add-cat") {
+            storeDataInLocalStorage();
+        }
+    });
+}
+
+// Call this function after defining the event listeners
+setupAutoSave();
